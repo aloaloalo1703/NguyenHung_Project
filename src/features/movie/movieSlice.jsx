@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const movieSlice = createSlice({
-  name: "movie",
+  name: "movieSlice",
   initialState,
   reducers: {
     setMovie: (state, action) => {

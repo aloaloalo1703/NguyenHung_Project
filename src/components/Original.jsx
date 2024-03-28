@@ -1,31 +1,23 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { selectOriginal } from "../features/movie/movieSlice";
 const Original = (props) => {
+  const movies = useSelector(selectOriginal);
   return (
     <Container>
-      <h4>Original</h4>
+      <h4>Originals</h4>
       <Contend>
-        <Wrap>
-          <Link to="/">
-            <img src="/images/Original.jpg" alt="" />
-          </Link>
-        </Wrap>
-        <Wrap>
-          <Link to="/">
-            <img src="/images/Original.jpg" alt="" />
-          </Link>
-        </Wrap>
-        <Wrap>
-          <Link to="/">
-            <img src="/images/Original.jpg" alt="" />
-          </Link>
-        </Wrap>
-        <Wrap>
-          <Link to="/">
-            <img src="/images/Original.jpg" alt="" />
-          </Link>
-        </Wrap>
+        {movies &&
+          movies.map((movie, key) => {
+            return (
+              <Wrap key={key}>
+                <Link to={`/detail/` + movie.id}>
+                  <img src={movie.cardImg} alt={movie.title} />
+                </Link>
+              </Wrap>
+            );
+          })}
       </Contend>
     </Container>
   );
