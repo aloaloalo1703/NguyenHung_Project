@@ -21,42 +21,42 @@ const Home = (props) => {
   let trending = [];
   useEffect(() => {
     console.log("hello");
-    if (!movies) {
-      db.collection("movies").onSnapshot((snapshot) => {
-        snapshot.docs.map((doc) => {
-          console.log(recommends);
-          switch (doc.data().type) {
-            case "recommend":
-              recommends = [...recommends, { id: doc.id, ...doc.data() }];
-              break;
 
-            case "new":
-              newMovies = [...newMovies, { id: doc.id, ...doc.data() }];
-              break;
+    const test = db.collection("movies").onSnapshot((snapshot) => {
+      snapshot.docs.map((doc) => {
+        console.log(recommends);
+        switch (doc.data().type) {
+          case "recommend":
+            recommends = [...recommends, { id: doc.id, ...doc.data() }];
+            break;
 
-            case "original":
-              originals = [...originals, { id: doc.id, ...doc.data() }];
-              break;
+          case "new":
+            newMovies = [...newMovies, { id: doc.id, ...doc.data() }];
+            break;
 
-            case "trending":
-              trending = [...trending, { id: doc.id, ...doc.data() }];
-              break;
-            default:
-              break;
-          }
-        });
+          case "original":
+            originals = [...originals, { id: doc.id, ...doc.data() }];
+            break;
 
-        dispatch(
-          setMovie({
-            recommend: recommends,
-            newMovie: newMovies,
-            original: originals,
-            trending: trending,
-          })
-        );
+          case "trending":
+            trending = [...trending, { id: doc.id, ...doc.data() }];
+            break;
+          default:
+            break;
+        }
       });
-    }
-  }, [userName, movies]);
+
+      dispatch(
+        setMovie({
+          recommend: recommends,
+          newMovie: newMovies,
+          original: originals,
+          trending: trending,
+        })
+      );
+    });
+    return () => test();
+  }, [userName]);
 
   return (
     <Container>
